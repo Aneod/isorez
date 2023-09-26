@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/isorez/static/css/main.74ac676e.css",
+    "main.css": "/isorez/static/css/main.c00d7c03.css",
     "main.js": "/isorez/static/js/main.2c63e318.js",
     "static/js/787.e95f004e.chunk.js": "/isorez/static/js/787.e95f004e.chunk.js",
     "index.html": "/isorez/index.html",
-    "main.74ac676e.css.map": "/isorez/static/css/main.74ac676e.css.map",
+    "main.c00d7c03.css.map": "/isorez/static/css/main.c00d7c03.css.map",
     "main.2c63e318.js.map": "/isorez/static/js/main.2c63e318.js.map",
     "787.e95f004e.chunk.js.map": "/isorez/static/js/787.e95f004e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.74ac676e.css",
+    "static/css/main.c00d7c03.css",
     "static/js/main.2c63e318.js"
   ]
 }
