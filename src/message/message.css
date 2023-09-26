@@ -1,0 +1,52 @@
+.message{
+    width: max-content;
+    max-width: 60%;
+    position: sticky;
+    bottom: 5vw;
+    margin-left: 5vw;
+    padding: 25px;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: disappear 4s ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes disappear {
+    0%{
+        margin-left: -100vw;
+    }
+    6%{
+        margin-left: 6vw;
+    }
+    7%{
+        margin-left: 3vw;
+    }
+    8%{
+        margin-left: 5vw;
+    }
+
+    95%{
+        margin-left: 5vw;
+    }
+    100%{
+        margin-left: -100vw;
+    }
+}
+
+.timerMessage{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 10px 10px 0;
+    width: 100%;
+    height: 10px;
+    animation: timer 3.7s linear 0s 1 normal forwards;
+}
+
+@keyframes timer {
+    from{
+        width: 100%;
+    }
+    to{
+        width: 0;
+    }
+}

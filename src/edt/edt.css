@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 2vw;
+  font-weight: bold;
+}
+
+.edt {
+  height: calc(100vh - 2vw);
+  min-height: 1500px;
+  margin: 1vw;
+}
+.edt .infoBarre {
+  height: 10vw;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2px;
+}
+.edt .infoBarre button {
+  padding: 2vw 4vw;
+  border-radius: 3px;
+  border: none;
+  background-color: #F4CFA5;
+  position: relative;
+  right: 2.7vw;
+}
+.edt .infoBarre .suivante {
+  border-radius: 0.7vw 7vw 7vw 0.7vw;
+}
+.edt .infoBarre .precedente {
+  border-radius: 7vw 0.7vw 0.7vw 7vw;
+}
+.edt .week {
+  height: calc(100% - 10vw);
+  display: flex;
+  gap: 2px;
+}
+.edt .week .hours {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.edt .week .hours .case:first-child {
+  min-height: 7vw;
+}
+.edt .week .day {
+  width: 18%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.edt .week .day .case:first-child {
+  min-height: 7vw;
+}
+.edt .week .case {
+  width: 100%;
+  height: calc((100% - 7vw) / 44);
+  background-color: rgb(240, 240, 240);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.edt .week .case img {
+  width: 100%;
+}
+.edt .week .hour {
+  width: 100%;
+  height: calc((100% - 7vw) / 11);
+  background-color: rgb(226, 226, 226);
+  border-radius: 0.7vw;
+  text-align: end;
+  padding-right: 0.7vw;
+}
+.edt .week .cours {
+  width: 100%;
+  height: calc((100% - 7vw) / 44 * 6 + 11px);
+  background-color: #F4CFA5;
+  border-radius: 0.7vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.8vw;
+  font-weight: normal;
+}/*# sourceMappingURL=edt.css.map */
