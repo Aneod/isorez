@@ -1,4 +1,6 @@
 .message{
+    display: none;
+
     width: max-content;
     max-width: 60%;
     position: sticky;

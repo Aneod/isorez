@@ -14,23 +14,51 @@
 .edt .infoBarre {
   height: 10vw;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-  gap: 2px;
+  margin: 0 2%;
 }
-.edt .infoBarre button {
-  padding: 2vw 4vw;
-  border-radius: 3px;
+.edt .infoBarre .weekSelector {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+  align-items: center;
+}
+.edt .infoBarre .weekSelector .changeWeek {
+  width: 40px;
+  height: 40px;
   border: none;
-  background-color: #F4CFA5;
-  position: relative;
-  right: 2.7vw;
+  border-radius: 50%;
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.edt .infoBarre .suivante {
-  border-radius: 0.7vw 7vw 7vw 0.7vw;
+.edt .infoBarre .weekSelector .changeWeek .arrowLeft {
+  width: 0;
+  height: 0;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-right: 20px solid black;
+  border-radius: 5px;
 }
-.edt .infoBarre .precedente {
-  border-radius: 7vw 0.7vw 0.7vw 7vw;
+.edt .infoBarre .weekSelector .changeWeek .arrowRight {
+  width: 0;
+  height: 0;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 20px solid black;
+  border-radius: 5px;
+}
+.edt .infoBarre .filter {
+  width: -moz-max-content;
+  width: max-content;
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: #9C90A2;
+  font-size: 18px;
+  padding: 0 35px;
 }
 .edt .week {
   height: calc(100% - 10vw);
@@ -38,14 +66,24 @@
   gap: 2px;
 }
 .edt .week .hours {
-  width: 10%;
+  width: -moz-max-content;
+  width: max-content;
   height: 100%;
   display: flex;
+  align-items: end;
   flex-direction: column;
   gap: 2px;
+  position: relative;
+  bottom: calc((100% - 7vw) / 88);
 }
 .edt .week .hours .case:first-child {
   min-height: 7vw;
+}
+.edt .week .dateText {
+  padding: 5px 15px;
+  width: -moz-max-content;
+  width: max-content;
+  border-radius: 100px;
 }
 .edt .week .day {
   width: 18%;
@@ -56,6 +94,7 @@
 }
 .edt .week .day .case:first-child {
   min-height: 7vw;
+  border-radius: 100px;
 }
 .edt .week .case {
   width: 100%;
@@ -63,23 +102,15 @@
   background-color: rgb(240, 240, 240);
   border-radius: 5px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .edt .week .case img {
   width: 100%;
 }
-.edt .week .hour {
-  width: 100%;
-  height: calc((100% - 7vw) / 11);
-  background-color: rgb(226, 226, 226);
-  border-radius: 0.7vw;
-  text-align: end;
-  padding-right: 0.7vw;
-}
 .edt .week .cours {
   width: 100%;
-  height: calc((100% - 7vw) / 44 * 6 + 11px);
   background-color: #F4CFA5;
   border-radius: 0.7vw;
   display: flex;
@@ -88,4 +119,20 @@
   text-align: center;
   font-size: 1.8vw;
   font-weight: normal;
+  padding: 15px;
+}
+.edt .week .hour {
+  width: 10px;
+  height: calc((100% - 7vw) / 11 * 3 / 4);
+  background-color: white;
+  border-radius: 100vh;
+  margin-right: 8px;
+}
+.edt .week .thehour {
+  width: 100%;
+  height: calc((100% - 7vw) / 11 * 1 / 4);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-right: 0.7vw;
 }/*# sourceMappingURL=edt.css.map */
