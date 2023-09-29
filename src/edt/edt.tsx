@@ -105,11 +105,11 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
 
             <div className='weekSelector'>
                 <button className='changeWeek lastWeek'>
-                    <div className='arrowLeft'></div>
+                    <div className='arrow arrowLeft'></div>
                 </button>
                 Semaine du 25 septembre au 1 octobre
                 <button className='changeWeek nextWeek'>
-                    <div className='arrowRight'></div>
+                    <div className='arrow arrowRight'></div>
                 </button>
             </div>
             

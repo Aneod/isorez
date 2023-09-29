@@ -8,7 +8,6 @@
 
 .edt {
   height: calc(100vh - 2vw);
-  min-height: 1500px;
   margin: 1vw;
 }
 .edt .infoBarre {
@@ -20,8 +19,8 @@
 }
 .edt .infoBarre .weekSelector {
   display: flex;
-  gap: 10px;
-  font-size: 20px;
+  gap: 1.4vw;
+  font-size: 2.7vw;
   align-items: center;
 }
 .edt .infoBarre .weekSelector .changeWeek {
@@ -34,31 +33,28 @@
   justify-content: center;
   align-items: center;
 }
-.edt .infoBarre .weekSelector .changeWeek .arrowLeft {
+.edt .infoBarre .weekSelector .changeWeek .arrow {
   width: 0;
   height: 0;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
-  border-right: 20px solid black;
-  border-radius: 5px;
+  border-top: 2.2vw solid transparent;
+  border-bottom: 2.2vw solid transparent;
+  border-radius: 0.7vw;
+}
+.edt .infoBarre .weekSelector .changeWeek .arrowLeft {
+  border-right: 2.7vw solid black;
 }
 .edt .infoBarre .weekSelector .changeWeek .arrowRight {
-  width: 0;
-  height: 0;
-  border-top: 16px solid transparent;
-  border-bottom: 16px solid transparent;
-  border-left: 20px solid black;
-  border-radius: 5px;
+  border-left: 2.7vw solid black;
 }
 .edt .infoBarre .filter {
   width: -moz-max-content;
   width: max-content;
-  height: 45px;
+  height: 6.2vw;
   border: none;
-  border-radius: 10px;
+  border-radius: 1.3vw;
   background-color: #9C90A2;
-  font-size: 18px;
-  padding: 0 35px;
+  font-size: 2.5vw;
+  padding: 0 2.2vw;
 }
 .edt .week {
   height: calc(100% - 10vw);
@@ -80,10 +76,10 @@
   min-height: 7vw;
 }
 .edt .week .dateText {
-  padding: 5px 15px;
+  padding: 0.7vw 2vw;
   width: -moz-max-content;
   width: max-content;
-  border-radius: 100px;
+  border-radius: 100vh;
 }
 .edt .week .day {
   width: 18%;
@@ -119,14 +115,14 @@
   text-align: center;
   font-size: 1.8vw;
   font-weight: normal;
-  padding: 15px;
+  padding: 2vw;
 }
 .edt .week .hour {
-  width: 10px;
+  width: 1.3vw;
   height: calc((100% - 7vw) / 11 * 3 / 4);
   background-color: white;
   border-radius: 100vh;
-  margin-right: 8px;
+  margin-right: 1.1vw;
 }
 .edt .week .thehour {
   width: 100%;

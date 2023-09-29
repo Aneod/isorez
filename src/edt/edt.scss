@@ -10,7 +10,6 @@
 .edt{
     $edtMargin: 1vw;
     height: calc(100vh - 2 * $edtMargin);
-    min-height: calc(1500px);
     margin: $edtMargin;
 
     $infoBarreHeight: 10vw;
@@ -24,8 +23,8 @@
 
         .weekSelector{
             display: flex;
-            gap: 10px;
-            font-size: 20px;
+            gap: 1.4vw;
+            font-size: 2.7vw;
             align-items: center;
 
             .changeWeek{
@@ -39,38 +38,34 @@
                 justify-content: center;
                 align-items: center;
 
-                .arrowLeft {
+                .arrow {
                     width: 0;
                     height: 0;
                     
-                    border-top: 16px solid transparent;
-                    border-bottom: 16px solid transparent;
-                    
-                    border-right: 20px solid black;
-                    border-radius: 5px;
+                    border-top: 2.2vw solid transparent;
+                    border-bottom: 2.2vw solid transparent;
+
+                    border-radius: .7vw;
+                }
+
+                .arrowLeft {
+                    border-right: 2.7vw solid black;
                 }
 
                 .arrowRight {
-                    width: 0;
-                    height: 0;
-                    
-                    border-top: 16px solid transparent;
-                    border-bottom: 16px solid transparent;
-                    
-                    border-left: 20px solid black;
-                    border-radius: 5px;
+                    border-left: 2.7vw solid black;
                 }
             }
         }        
 
         .filter{
             width: max-content;
-            height: 45px;
+            height: 6.2vw;
             border: none;
-            border-radius: 10px;
+            border-radius: 1.3vw;
             background-color: #9C90A2;
-            font-size: 18px;
-            padding: 0 35px;
+            font-size: 2.5vw;
+            padding: 0 2.2vw;
         }
     }
 
@@ -99,9 +94,9 @@
         }
 
         .dateText{
-            padding: 5px 15px;
+            padding: .7vw 2vw;
             width: max-content;
-            border-radius: 100px;
+            border-radius: 100vh;
         }
 
         .day{
@@ -137,7 +132,7 @@
             width: 100%;
             // height: calc(((100% - $heightDayHead) / (11 * 4)) * 6 + (2px * 5 - 1px));
             background-color: #F4CFA5;
-            border-radius: 0.7vw;
+            border-radius: .7vw;
 
             display: flex;
             justify-content: center;
@@ -147,16 +142,16 @@
             font-size: 1.8vw;
             font-weight: normal;
 
-            padding: 15px;
+            padding: 2vw;
         }
 
         .hour{
-            width: 10px;
+            width: 1.3vw;
             height: calc(((100% - $heightDayHead) / 11) * 3/4);
             background-color: white;
             border-radius: 100vh;
 
-            margin-right: 8px;
+            margin-right: 1.1vw;
         }
 
         .thehour{
@@ -167,7 +162,7 @@
             justify-content: end;
             align-items: center;
 
-            padding-right: 0.7vw;
+            padding-right: .7vw;
         }
     }
 }
