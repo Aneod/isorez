@@ -191,27 +191,22 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
         return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'][i]
     }
 
-    const whichMonth = (i: number) => {
-        return ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'][i - 1]
-    }
+    const twoNumberForString = (numberString: string) => parseInt(numberString) < 10 ? '0' + numberString : numberString
 
-    const getTitleDay = (i: number, daysOfWeek: any) => `${whichDay(i)} ${daysOfWeek[i].day} / ${daysOfWeek[i].month}`
+    const getTitleDay = (i: number, daysOfWeek: any) => `${whichDay(i)} ${daysOfWeek[i].day} / ${twoNumberForString(daysOfWeek[i].month)}`
 
     const getDays = (i: number, daysOfWeek: any) => {
         return JSXOfDay(daysOfWeek[i].year, daysOfWeek[i].month, daysOfWeek[i].day)
     }
 
-
     const getTitleWeek = (daysOfWeek: any) => {
-        if(daysOfWeek[0].month === daysOfWeek[4].month){
-            return `Semaine du ${daysOfWeek[0].day} au ${daysOfWeek[4].day} ${whichMonth(daysOfWeek[4].month)}`
-        }
-        return `Semaine du ${daysOfWeek[0].day} ${whichMonth(daysOfWeek[0].month)} au ${daysOfWeek[4].day} ${whichMonth(daysOfWeek[4].month)}`
+        return `Semaine du ${daysOfWeek[0].day} / ${twoNumberForString(daysOfWeek[0].month)} au ${daysOfWeek[4].day} / ${twoNumberForString(daysOfWeek[4].month)}`
     }
 
     return (
     <div className="edt">
         <div className='infoBarre'>
+            <button className='filter' onClick={showOption}>Filtrage</button>
 
             <div className='weekSelector'>
                 <button className='changeWeek lastWeek'>
@@ -222,13 +217,11 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
                     <div className='arrow arrowRight' onClick={() => setWeekNumber(++weekNumber)}></div>
                 </button>
             </div>
-            
-            
-            <button className='filter' onClick={showOption}>Filtrage</button>
+            <button className='currentWeek' onClick={() => setWeekNumber(0)}>Aujourd'hui</button>
         </div>
         <div className='week'>
             <div className='hours'>
-                <div className='case' style={{backgroundColor: 'white'}}></div>
+                <div className='case' style={{backgroundColor: 'white', zIndex: -1}}></div>
                 <div className='thehour'>8h00</div>
                 <div className='hour' style={{backgroundColor: '#F3DE8A'}}></div>
                 <div className='thehour'>9h00</div>
