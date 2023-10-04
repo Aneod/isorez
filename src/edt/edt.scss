@@ -131,7 +131,8 @@
         .cours{
             width: 100%;
             // height: calc(((100% - $heightDayHead) / (11 * 4)) * 6 + (2px * 5 - 1px));
-            background-color: #F4CFA5;
+            background-color: rgba($color: #F4CFA5, $alpha: .5);
+            border: #F4CFA5 5px solid;
             border-radius: .7vw;
 
             display: flex;

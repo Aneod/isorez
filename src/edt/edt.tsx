@@ -7,96 +7,100 @@ type Props = {
 
 const Edt: React.FC<Props> = ({showOption, data}) => {
 
-    const monday = () => {
-        let mondayListCours = []
-        let currentTime = [8, 0]
-        let index = 0
 
-        for(let cours of data){
-            if(cours.day == 'lundi') mondayListCours.push(cours)
-        }
+    const JSXOfDay = (year: string, month: string, day: string) => {
 
-        let trenteSixList = []
-        for(let i = 0; i < 36; i++){
-            trenteSixList.push(i)
-        }
-
-        return <div className='day'>
-            <div className='case' style={{backgroundColor: 'inherit'}}>
-                <p  className='dateText' style={{backgroundColor: '#F3DE8A'}}>Lundi 25/09</p>
-            </div>
-            {JSXCours(
-                data[0].cours,
-                data[0].location,
-                data[0].start,
-                data[0].end,
-                data[0].day,
-            )}
-            {JSXCase()}
-            {JSXCase()}
-
-            {trenteSixList.map(() => {
-                return JSXCase()
-            })}
-            
-        </div>
-    }
-
-    const nextPeriod = (mondayListCurrentIndex: number, currentTime: number[]) => {
+        const dayClasses = (year: string, month: string, day: string) => {
+            return data.filter(
+                (d: { day: { year: string; month: string; day: string } }) =>
+                d.day.year === year && d.day.month === month && d.day.day === day)
+            }
         
-    }
+        const mondayClassesList = dayClasses(year, month, day)
+
+        const sortedClasses = mondayClassesList.toSorted((a: any, b: any) =>
+            a.start.hour === b.start.hour ? a.start.minutes - b.start.minutes : a.start.hour - b.start.hour
+        )
+
+        const mondayClasseTimes = sortedClasses.map((c: any) => {
+            const startTime: {hour: string, minutes: string} = c.start
+            const endTime: {hour: string, minutes: string} = c.end
+
+            if(parseInt(endTime.hour) < parseInt(startTime.hour) || (endTime.hour == startTime.hour && parseInt(endTime.minutes) < parseInt(startTime.minutes))) console.error('mondayClassesFifteens')
+
+            const oneHourLess: boolean = endTime.minutes < startTime.minutes
+            let hour = parseInt(endTime.hour) - parseInt(startTime.hour)
+            if(oneHourLess) hour--
+
+            const minutes = oneHourLess ? 60 - parseInt(startTime.minutes) + parseInt(endTime.minutes) : parseInt(endTime.minutes) - parseInt(startTime.minutes)
+
+            const stringHour = hour.toString()
+            const stringMinutes = minutes.toString()
+
+            return {stringHour, stringMinutes}
+        })
+
+        const fifteenInTimes = (listOfClasses: any) => listOfClasses.map((c: {stringHour: string, stringMinutes: string}) => {
+            return parseInt(c.stringHour) * 4 + Math.floor(parseInt(c.stringMinutes) / 15)
+        })
+
+        const fifteenMondayClasseTimes = fifteenInTimes(mondayClasseTimes)
 
 
-    const JSXCours = (
-        cours: string,
-        location: string,
-        start: number[],
-        end: number[],
-        day: string
-    ) => {
-        const fift = howMuchFifteenInCours(start, end)
-
-        return <div className='cours' style={{height: `calc(((100% - 7vw) / (11 * 4)) * ${fift} + (2px * ${fift - 1} - 1px))`}}> {cours} {location} </div>
-    }
-
-    const howMuchFifteenInCours = (start: number[], end: number[]) => {
-
-        const minuteStart = start[1]
-        const hourStart = start[0]
-
-        const minuteEnd = end[1]
-        const hourEnd = end[0]
-
-        if(
-            isNaN(minuteEnd) ||
-            isNaN(minuteStart) ||
-            isNaN(hourEnd) ||
-            isNaN(hourStart)
-        ) return 0
-
-        if(hourEnd < hourStart){
-            return 0
+        const coursJSX: any = (i: number) => {
+            return <div className='cours' style={{height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
+                {sortedClasses[i].summary.data}
+                <br />
+                {sortedClasses[i].location.data}
+            </div>
         }
-        if(hourEnd == hourStart){
-            if(minuteEnd < minuteStart) return 0
-            
-            const fifteenBetween = Math.floor(minuteEnd - minuteStart / 15)
-            return fifteenBetween
+
+        const arrayOfSpaceNumber = (startTime: {hour: string, minutes: string}, endTime: {hour: string, minutes: string}) => {
+
+            if(parseInt(endTime.hour) < parseInt(startTime.hour) || (endTime.hour == startTime.hour && parseInt(endTime.minutes) < parseInt(startTime.minutes))) console.error('mondayClassesFifteens')
+
+            const oneHourLess: boolean = endTime.minutes < startTime.minutes
+            let hour = parseInt(endTime.hour) - parseInt(startTime.hour)
+            if(oneHourLess) hour--
+
+            const minutes = oneHourLess ? 60 - parseInt(startTime.minutes) + parseInt(endTime.minutes) : parseInt(endTime.minutes) - parseInt(startTime.minutes)
+
+            const stringHour = hour.toString()
+            const stringMinutes = minutes.toString()
+
+            const fifteenInTimes = parseInt(stringHour) * 4 + Math.floor(parseInt(stringMinutes) / 15)
+
+            let numberList = []
+            for(let i = 0; i < fifteenInTimes; i++){
+                numberList.push(i)
+            }
+            return numberList
         }
 
-        const bonusHours = minuteEnd < minuteStart ? 1 : 0
-        const hoursBetween = hourEnd - hourStart - bonusHours
+        const timeLapse = (i: number) => {
+            const firstHour = i <= 0 ? {hour: '08', minutes: '00'} : sortedClasses[i - 1].end
 
-        const minutesBetween = bonusHours == 1 ? minuteEnd + 60 - minuteStart : minuteEnd - minuteStart
+            return <>
+                {arrayOfSpaceNumber(firstHour, sortedClasses[i].start).map(() => <div className='case'></div>)}
+                {coursJSX(i)}
+            </>
+        }
 
-        const minutesFifteened = Math.floor(minutesBetween / 15)
-        const hoursFifteened = Math.floor(hoursBetween * 60 / 15)
+        const allHours = () => {
+            let numberList = []
+            for(let i = 0; i < sortedClasses.length; i++){
+                numberList.push(i)
+            }
 
-        return hoursFifteened + minutesFifteened
-    }
-
-    const JSXCase = () => {
-        return <div className='case'></div>
+            return <>
+                {numberList.map(i => timeLapse(i))}
+                {arrayOfSpaceNumber(sortedClasses[sortedClasses.length - 1].end, {hour: '19', minutes: '00'}).map(() => <div className='case'></div>)}
+            </>
+        }
+        
+        return <>
+            {allHours()}
+        </>
     }
 
     return (
@@ -142,202 +146,35 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
                 <div className='thehour'>18h00</div>
                 <div className='hour' style={{backgroundColor: '#9C90A2'}}></div>
             </div>
-            {monday()}
+            <div className='day'>
+                <div className='case' style={{backgroundColor: 'inherit'}}>
+                    <p  className='dateText' style={{backgroundColor: '#F3DE8A'}}>Lundi 25/09</p>
+                </div>
+                {JSXOfDay('2023', '09', '25')}
+            </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
                     <p  className='dateText' style={{backgroundColor: '#F4D796'}}>Mardi 26/09</p>
                 </div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
+                {JSXOfDay('2023', '09', '26')}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>Mercredi 28/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>Mercredi 27/09</p>
                 </div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
+                {JSXOfDay('2023', '09', '27')}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
                     <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>Jeudi 28/09</p>
                 </div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
+                {JSXOfDay('2023', '09', '28')}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
                     <p  className='dateText' style={{backgroundColor: '#F4CBAB'}}>Vendredi 29/09</p>
                 </div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
-                <div className='case'></div>
+                {JSXOfDay('2023', '09', '29')}
             </div>
         </div>
     </div>

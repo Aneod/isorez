@@ -107,7 +107,8 @@
 }
 .edt .week .cours {
   width: 100%;
-  background-color: #F4CFA5;
+  background-color: rgba(244, 207, 165, 0.5);
+  border: #F4CFA5 5px solid;
   border-radius: 0.7vw;
   display: flex;
   justify-content: center;

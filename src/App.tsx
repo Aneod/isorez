@@ -5,18 +5,19 @@ import Option from './option/option';
 import { useState } from 'react';
 import data from './monfichier.json'
 
+import regroupedUsefulData from './datax';
+
 function App() {
 
   const [displayOption, setDisplayOption] = useState('none')
 
-  const apply = () => {
-    setDisplayOption(displayOption === 'none' ? 'flex' : 'none')
-  }
+  const apply = () => setDisplayOption(displayOption === 'none' ? 'flex' : 'none')
+  
 
   return (
     <div className="App">
       <Edt
-        data = {data}
+        data = {regroupedUsefulData}
         showOption = {() => apply()}
       />
       <Message
