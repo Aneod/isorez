@@ -12,7 +12,21 @@ function App() {
   const [displayOption, setDisplayOption] = useState('none')
 
   const apply = () => setDisplayOption(displayOption === 'none' ? 'flex' : 'none')
-  
+
+
+  // const url = 'https://planning.univ-rennes1.fr/jsp/custom/modules/plannings/6YPq81nv.shu'
+
+  // fetch(url)
+  //   .then(response => {
+  //     if(!response.ok){
+  //       throw new Error('Erreur loors du téléchargement des données')
+  //     }
+  //     return response.text()
+  //   })
+  //   .then(data => {
+  //     const ics_content = data
+  //     console.log(ics_content)
+  //   })
 
   return (
     <div className="App">

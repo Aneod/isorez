@@ -1,4 +1,6 @@
+import dayjs from 'dayjs'
 import './edt.css'
+import { useState } from 'react'
 
 type Props = {
     showOption: () => void
@@ -7,8 +9,22 @@ type Props = {
 
 const Edt: React.FC<Props> = ({showOption, data}) => {
 
+    let [weekNumber, setWeekNumber] = useState(0)
 
     const JSXOfDay = (year: string, month: string, day: string) => {
+
+        let summerHour: boolean = true
+        if(parseInt(month) >= 10 || parseInt(month) <= 3){
+            if(parseInt(month) === 10 && parseInt(day) >= 29){
+                summerHour = false
+            }
+            else if(parseInt(month) === 3 && parseInt(day) <= 26){
+                summerHour = false
+            }
+            else if(parseInt(month) > 10 || parseInt(month) < 3){
+                summerHour = false
+            }
+        }
 
         const dayClasses = (year: string, month: string, day: string) => {
             return data.filter(
@@ -16,7 +32,23 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
                 d.day.year === year && d.day.month === month && d.day.day === day)
             }
         
-        const mondayClassesList = dayClasses(year, month, day)
+        let mondayClassesList = dayClasses(year, month, day)
+
+        let summerMondayClassesList: any[] = []
+        if(!summerHour){
+            mondayClassesList.map((c: any) => {
+
+                summerMondayClassesList.push({
+                    start: {hour: (parseInt(c.start.hour) - 1).toString(), minutes: c.start.minutes},
+                    end: {hour: (parseInt(c.end.hour) - 1).toString(), minutes: c.end.minutes},
+                    summary: c.summary,
+                    location: c.location,
+                    day: c.day,
+                })
+            })
+
+            mondayClassesList = summerMondayClassesList
+        }
 
         const sortedClasses = mondayClassesList.toSorted((a: any, b: any) =>
             a.start.hour === b.start.hour ? a.start.minutes - b.start.minutes : a.start.hour - b.start.hour
@@ -47,8 +79,24 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
         const fifteenMondayClasseTimes = fifteenInTimes(mondayClasseTimes)
 
 
+        const makeClassColor = (name: string) => {
+            switch (name){
+                case 'ALG2': return '#cd9657'
+                case 'AlgLin': return '#e1933a'
+                case 'RES': return '#c7b7a4'
+                case 'OFI': return '#f6cc98'
+                case 'PO': return '#bc8037'
+                case 'Anglais': return '#d1b13c'
+                case 'WEB': return '#5da3c3'
+                case 'EN2': return '#2eb97d'
+                default: return '#F4CFA5'
+            }
+        }
+
+
         const coursJSX: any = (i: number) => {
-            return <div className='cours' style={{height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
+            const color = makeClassColor(sortedClasses[i].summary.data.split(' ')[0])
+            return <div className='cours' style={{backgroundColor: color, height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
                 {sortedClasses[i].summary.data}
                 <br />
                 {sortedClasses[i].location.data}
@@ -57,7 +105,7 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
 
         const arrayOfSpaceNumber = (startTime: {hour: string, minutes: string}, endTime: {hour: string, minutes: string}) => {
 
-            if(parseInt(endTime.hour) < parseInt(startTime.hour) || (endTime.hour == startTime.hour && parseInt(endTime.minutes) < parseInt(startTime.minutes))) console.error('mondayClassesFifteens')
+            if(parseInt(endTime.hour) < parseInt(startTime.hour) || (endTime.hour === startTime.hour && parseInt(endTime.minutes) < parseInt(startTime.minutes))) console.log(startTime, endTime)
 
             const oneHourLess: boolean = endTime.minutes < startTime.minutes
             let hour = parseInt(endTime.hour) - parseInt(startTime.hour)
@@ -92,6 +140,12 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
                 numberList.push(i)
             }
 
+            if(sortedClasses.length === 0){
+                return <>
+                    {arrayOfSpaceNumber({hour: '08', minutes: '00'}, {hour: '19', minutes: '00'}).map(() => <div className='case'></div>)}
+                </>
+            }
+
             return <>
                 {numberList.map(i => timeLapse(i))}
                 {arrayOfSpaceNumber(sortedClasses[sortedClasses.length - 1].end, {hour: '19', minutes: '00'}).map(() => <div className='case'></div>)}
@@ -103,17 +157,69 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
         </>
     }
 
+    let day: any = dayjs()
+
+    day = day.add(weekNumber, 'week')
+
+    let monday: any = day
+    if(day.$W >= 1 && day.$W <= 5){
+        monday = day.add(-(day.$W - 1), 'day')
+    }
+    else{
+        if(day.$W == 0){
+            monday = day.add(1, 'day')
+        }
+        else{
+            monday = day.add(2, 'day')
+        }
+    }
+
+    const stringifyDay = (day: any) => {
+        return {
+            year: day.$y.toString(),
+            month: (day.$M + 1).toString(),
+            day: day.$D < 10 ? '0' + day.$D : day.$D.toString()
+        }
+    }
+
+    const daysOfWeek = []
+    for(let i = 0; i < 5; i++){
+        daysOfWeek.push(stringifyDay(monday.add(i, 'day')))
+    }
+
+    const whichDay = (i: number) => {
+        return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'][i]
+    }
+
+    const whichMonth = (i: number) => {
+        return ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'][i - 1]
+    }
+
+    const getTitleDay = (i: number, daysOfWeek: any) => `${whichDay(i)} ${daysOfWeek[i].day} / ${daysOfWeek[i].month}`
+
+    const getDays = (i: number, daysOfWeek: any) => {
+        return JSXOfDay(daysOfWeek[i].year, daysOfWeek[i].month, daysOfWeek[i].day)
+    }
+
+
+    const getTitleWeek = (daysOfWeek: any) => {
+        if(daysOfWeek[0].month === daysOfWeek[4].month){
+            return `Semaine du ${daysOfWeek[0].day} au ${daysOfWeek[4].day} ${whichMonth(daysOfWeek[4].month)}`
+        }
+        return `Semaine du ${daysOfWeek[0].day} ${whichMonth(daysOfWeek[0].month)} au ${daysOfWeek[4].day} ${whichMonth(daysOfWeek[4].month)}`
+    }
+
     return (
     <div className="edt">
         <div className='infoBarre'>
 
             <div className='weekSelector'>
                 <button className='changeWeek lastWeek'>
-                    <div className='arrow arrowLeft'></div>
+                    <div className='arrow arrowLeft' onClick={() => setWeekNumber(--weekNumber)}></div>
                 </button>
-                Semaine du 25 septembre au 1 octobre
+                {getTitleWeek(daysOfWeek)}
                 <button className='changeWeek nextWeek'>
-                    <div className='arrow arrowRight'></div>
+                    <div className='arrow arrowRight' onClick={() => setWeekNumber(++weekNumber)}></div>
                 </button>
             </div>
             
@@ -148,33 +254,33 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F3DE8A'}}>Lundi 25/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F3DE8A'}}>{getTitleDay(0, daysOfWeek)}</p>
                 </div>
-                {JSXOfDay('2023', '09', '25')}
+                {getDays(0, daysOfWeek)}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F4D796'}}>Mardi 26/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F4D796'}}>{getTitleDay(1, daysOfWeek)}</p>
                 </div>
-                {JSXOfDay('2023', '09', '26')}
+                {getDays(1, daysOfWeek)}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>Mercredi 27/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>{getTitleDay(2, daysOfWeek)}</p>
                 </div>
-                {JSXOfDay('2023', '09', '27')}
+                {getDays(2, daysOfWeek)}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>Jeudi 28/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F4CFA5'}}>{getTitleDay(3, daysOfWeek)}</p>
                 </div>
-                {JSXOfDay('2023', '09', '28')}
+                {getDays(3, daysOfWeek)}
             </div>
             <div className='day'>
                 <div className='case' style={{backgroundColor: 'inherit'}}>
-                    <p  className='dateText' style={{backgroundColor: '#F4CBAB'}}>Vendredi 29/09</p>
+                    <p  className='dateText' style={{backgroundColor: '#F4CBAB'}}>{getTitleDay(4, daysOfWeek)}</p>
                 </div>
-                {JSXOfDay('2023', '09', '29')}
+                {getDays(4, daysOfWeek)}
             </div>
         </div>
     </div>
