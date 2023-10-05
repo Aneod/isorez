@@ -4,6 +4,7 @@ import Message from './message/message';
 import Option from './option/option';
 import { useState } from 'react';
 import data from './monfichier.json'
+import React, { TouchEvent } from 'react';
 
 import regroupedUsefulData from './datax';
 
@@ -27,6 +28,7 @@ function App() {
   //     const ics_content = data
   //     console.log(ics_content)
   //   })
+  
 
   return (
     <div className="App">

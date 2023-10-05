@@ -8,7 +8,7 @@
 }
 
 .edt{
-    $edtMargin: 1vw;
+    $edtMargin: 2vw;
     height: calc(100vh - 2 * $edtMargin);
     margin: $edtMargin;
 
@@ -17,22 +17,27 @@
     .infoBarre{
         height: $infoBarreHeight;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         margin: 0 2%;
+        position: relative;
+        font-size: 2.7vw;
 
         .weekSelector{
             display: flex;
             gap: 1.4vw;
             font-size: 2.7vw;
             align-items: center;
+            justify-content: space-between;
+            width: 100%;
 
             .changeWeek{
-                width: 40px;
-                height: 40px;
+                width: 100%;
+                height: 100%;
                 border: none;
                 border-radius: 50%;
                 background-color: inherit;
+                font-size: 3vw;
 
                 display: flex;
                 justify-content: center;
@@ -56,19 +61,16 @@
                     border-left: 2.7vw solid black;
                 }
             }
-        }
 
-        .currentWeek{
-            width: max-content;
-            height: max-content;
-            border-radius: 10px;
-            padding: 15px;
-            background-color: #9C90A2;
-            border: none;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            .currentWeek{
+                border-radius: 1vw;
+                padding: 2vw;
+                border: solid black 1px;
+    
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
 
         .filter{
@@ -76,14 +78,16 @@
             height: 6.2vw;
             border: none;
             border-radius: 1.3vw;
-            background-color: #9C90A2;
             font-size: 2.5vw;
             padding: 0 2.2vw;
+
+            position: absolute;
+            right: 0;
         }
     }
 
     .week{
-        height: calc(100% - $infoBarreHeight);
+        height: calc(100% - $infoBarreHeight * 2);
         display: flex;
         gap: 2px;
 
@@ -121,14 +125,14 @@
 
             .case:first-child{
                 min-height: $heightDayHead;
-                border-radius: 100px;
+                border-radius: 100vw;
             }
         }
 
         .case{
             width: 100%;
             height: calc((100% - $heightDayHead) / (11 * 4));
-            background-color: rgb(240, 240, 240);
+            background-color: rgb(248, 248, 248);
             border-radius: 5px;
 
             display: flex;
@@ -143,8 +147,7 @@
 
         .cours{
             width: 100%;
-            // height: calc(((100% - $heightDayHead) / (11 * 4)) * 6 + (2px * 5 - 1px));
-            border-radius: .7vw;
+            border-radius: 5px;
 
             background-color: #bc8037;
 

@@ -95,7 +95,9 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
 
 
         const coursJSX: any = (i: number) => {
-            const color = makeClassColor(sortedClasses[i].summary.data.split(' ')[0])
+            const attributes = sortedClasses[i].summary.data.split(' ')
+            let color = makeClassColor(attributes[0])
+            if(attributes.includes('CC')) color = '#d22'
             return <div className='cours' style={{backgroundColor: color, height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
                 {sortedClasses[i].summary.data}
                 <br />
@@ -188,7 +190,7 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
     }
 
     const whichDay = (i: number) => {
-        return ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'][i]
+        return ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'][i]
     }
 
     const twoNumberForString = (numberString: string) => parseInt(numberString) < 10 ? '0' + numberString : numberString
@@ -206,18 +208,9 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
     return (
     <div className="edt">
         <div className='infoBarre'>
-            <button className='filter' onClick={showOption}>Filtrage</button>
+            <button className='filter' onClick={showOption}>URL</button>
 
-            <div className='weekSelector'>
-                <button className='changeWeek lastWeek'>
-                    <div className='arrow arrowLeft' onClick={() => setWeekNumber(--weekNumber)}></div>
-                </button>
-                {getTitleWeek(daysOfWeek)}
-                <button className='changeWeek nextWeek'>
-                    <div className='arrow arrowRight' onClick={() => setWeekNumber(++weekNumber)}></div>
-                </button>
-            </div>
-            <button className='currentWeek' onClick={() => setWeekNumber(0)}>Aujourd'hui</button>
+            {getTitleWeek(daysOfWeek)}
         </div>
         <div className='week'>
             <div className='hours'>
@@ -275,6 +268,20 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
                 </div>
                 {getDays(4, daysOfWeek)}
             </div>
+        </div>
+        
+        <div className='infoBarre'>
+
+            <div className='weekSelector'>
+                <button className='changeWeek lastWeek' onClick={() => setWeekNumber(--weekNumber)}>
+                    <div className='arrow arrowLeft'></div>
+                </button>
+                <button className='changeWeek currentWeek' onClick={() => setWeekNumber(0)}>Aujourd'hui</button>
+                <button className='changeWeek nextWeek' onClick={() => setWeekNumber(++weekNumber)}>
+                    <div className='arrow arrowRight'></div>
+                </button>
+            </div>
+            
         </div>
     </div>
     );
