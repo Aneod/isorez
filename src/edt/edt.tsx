@@ -4,10 +4,11 @@ import { useState } from 'react'
 
 type Props = {
     showOption: () => void
+    showClass: (cours: any, color: string) => void
     data: any
 }
 
-const Edt: React.FC<Props> = ({showOption, data}) => {
+const Edt: React.FC<Props> = ({showOption, showClass, data}) => {
 
     let [weekNumber, setWeekNumber] = useState(0)
 
@@ -93,12 +94,11 @@ const Edt: React.FC<Props> = ({showOption, data}) => {
             }
         }
 
-
         const coursJSX: any = (i: number) => {
             const attributes = sortedClasses[i].summary.data.split(' ')
             let color = makeClassColor(attributes[0])
             if(attributes.includes('CC')) color = '#d22'
-            return <div className='cours' style={{backgroundColor: color, height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
+            return <div className='cours' onClick={() => showClass(sortedClasses[i], color)} style={{backgroundColor: color, height: `calc(((100% - 7vw) / (11 * 4)) * ${fifteenMondayClasseTimes[i]} + (2px * ${fifteenMondayClasseTimes[i] - 1} - 1px))`}}>
                 {sortedClasses[i].summary.data}
                 <br />
                 {sortedClasses[i].location.data}

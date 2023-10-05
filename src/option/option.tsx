@@ -15,7 +15,7 @@ const Option: React.FC<Props> = ({apply, displayOption}) => {
 
             <p style={{fontSize: 18, marginBottom: 20}}>
                 <span style={{fontWeight: 900, fontSize: 18}}>Si vous souhaitez avoir l'ensemble de vos cours sur l'appli</span>, vous pouvez obtenir le lien correspondant depuis un ordinateur
-                (ctrl + clic pour sélectionner plusieures fichier en même temps), puis l'ajouter dans le champs ci-dessous.
+                (ctrl + clic pour sélectionner plusieurs fichier en même temps), puis l'ajouter dans le champs ci-dessous.
             </p>
 
             <input type="text"/>
