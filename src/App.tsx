@@ -19,12 +19,13 @@ function App() {
 
   const changeData = () => {
     const link = (document.querySelector('input[type=text]') as HTMLInputElement).value
-    //on appelle downloadICSFile sur link
     downloadICSFile(link).then((data) => {
-      const regroupedUsefulData = data
-      console.log(regroupedUsefulData)
-      //on met à jour regroupedUsefulData
+      console.log('data extraced from ics file')
+      console.log(data)
+    }).catch((err) => {
+      console.log(err)
     })
+
   }
 
   const [displayPanel, setDisplayPanel] = useState('none')
@@ -58,9 +59,11 @@ function App() {
 
   // }
 
-  const https = require('https');
 
   async function downloadICSFile(url: string): Promise<string> {
+    //case 1 : project is deployed on the internet
+
+    const https = require('https');
     return new Promise((resolve, reject) => {
       https.get(url, (res: any) => {
         let data = '';
@@ -74,6 +77,36 @@ function App() {
         reject(err);
       });
     });
+
+
+    // case 2 : project is deployed on localhost port 3001
+    // we also extract the data from the ics file which can be downloaded from the url using express axios and cors
+    // and we return the data 
+    // const express = require('express');
+    // const cors = require('cors');
+
+
+    // const express = require('express');
+    // const cors = require('cors');
+
+    // const app = express();
+
+    // app.use(cors());
+
+    // app.get('/', (req: any, res: any) => {
+    //   res.send(url);
+    // });
+
+    // app.listen(3001, () => {
+    //   console.log('Server started!');
+    // });
+
+    // return axios.get('http://localhost:3001').then((res: any) => res.data)
+
+
+
+
+
   }
 
 
