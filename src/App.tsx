@@ -20,10 +20,11 @@ function App() {
   const changeData = () => {
     const link = (document.querySelector('input[type=text]') as HTMLInputElement).value
     downloadICSFile(link).then((data) => {
-      console.log('data extraced from ics file')
-      console.log(data)
-    }).catch((err) => {
-      console.log(err)
+      // console.log('data extraced from ics file')
+      // console.log(data)
+    // }).catch((err) => {
+    //   console.log(err)
+    
     })
 
   }
