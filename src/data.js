@@ -3243,4 +3243,4 @@ END:VEVENT
 END:VCALENDAR
 `
 
-export default data
+export default data;

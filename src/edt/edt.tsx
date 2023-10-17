@@ -276,7 +276,7 @@ const Edt: React.FC<Props> = ({showOption, showClass, data}) => {
                 <button className='changeWeek lastWeek' onClick={() => setWeekNumber(--weekNumber)}>
                     <div className='arrow arrowLeft'></div>
                 </button>
-                <button className='changeWeek currentWeek' onClick={() => setWeekNumber(0)}>Aujourd'hui</button>
+                <button className='changeWeek currentWeek' onClick={() => setWeekNumber(0)}>Cette semaine</button>
                 <button className='changeWeek nextWeek' onClick={() => setWeekNumber(++weekNumber)}>
                     <div className='arrow arrowRight'></div>
                 </button>

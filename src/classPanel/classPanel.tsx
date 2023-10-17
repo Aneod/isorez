@@ -10,8 +10,6 @@ type Props = {
 
 const ClassPanel: React.FC<Props> = ({apply, displayOption, data, color}) => {
 
-    console.log(data)
-
     return <div className="classPanel" style={{display: displayOption}}>
         <div className='panel'>
 
